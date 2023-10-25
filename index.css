@@ -1,5 +1,5 @@
 :root {
-  --bv8-debug-grid: rgba(97, 0, 255, 0.1);
+  --bv8-debug-grid: rgba(23, 198, 93, 0.1);
 
   --bv8-gap: 24px;
   --bv8-column: calc(25% - var(--bv8-gap) / 1.3);
@@ -11,14 +11,10 @@
   --bv8-xxl: 1400px;
 
   --bv8-container: 100%;
-  --bv8-container-md: 696px;
-  --bv8-container-lg: 920px;
-  --bv8-container-xl: 1128px;
+  --bv8-container-md: 680px;
+  --bv8-container-lg: 936px;
+  --bv8-container-xl: 1064px;
   --bv8-container-xxl: 1320px;
-}
-body {
-  margin: 0;
-  padding: 0;
 }
 .bv8-debug-breakpoints:before {
   content: 'xs';
@@ -172,7 +168,7 @@ body {
 }
 @media (min-width: 768px) {
   :root {
-    --bv8-column: 66px;
+    --bv8-column: 64px;
   }
   .bv8-debug-breakpoints:before {
     content: 'md';
@@ -340,7 +336,7 @@ body {
 }
 @media (min-width: 992px) {
   :root {
-    --bv8-column: 94px;
+    --bv8-column: 96px;
   }
   .bv8-debug-breakpoints:before {
     content: 'lg';
@@ -444,7 +440,7 @@ body {
 }
 @media (min-width: 1200px) {
   :root {
-    --bv8-column: 120px;
+    --bv8-column: 112px;
   }
   .bv8-debug-breakpoints:before {
     content: 'xl';

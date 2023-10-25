@@ -1,33 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  style="
+    font-size: 16px;
+    font-family: 'Maven Pro', sans-serif;
+    font-weight: bold;
+    text-align: center;
+  "
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bootstrap Grid V8</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="index.css" />
+    <style>
+      h1 {
+        font-size: 4rem;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .example {
+        border: 2px solid;
+        padding: 2rem 0;
+        border-radius: 0.5rem;
+        color: #17c65d;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      button {
+        border: none;
+        color: #02160a;
+        font-size: 1.125rem;
+        cursor: pointer;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        background-color: #17c65d;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      button:active {
+        opacity: 0.9;
+        transform: scale(0.95);
+      }
+      button::before {
+        content: attr(data-view) ' ';
+      }
+      button:first-letter {
+        text-transform: uppercase;
+      }
+    </style>
   </head>
-  <body class="bv8-debug-breakpoints bv8-debug-grid">
-    <div class="container">
-      <div class="bgc col-1">Column 1</div>
-      <div class="bgc col-1">Column 1</div>
-      <div class="bgc col-1">Column 1</div>
-      <div class="bgc col-1">Column 1</div>
-      <div class="bgc col-1">Column 1</div>
-      <div class="bgc col-1">Column 1</div>
-      <div class="bgc col-1">Column 1</div>
-      <div class="bgc col-1">Column 1</div>
+  <body>
+    <div class="container justify-content-center">
+      <div class="col-8">
+        <h1>Bootstrap Grid V8</h1>
+      </div>
+      <div class="col-2 flex-centered">
+        <button id="toggle-grid" data-view="show">grid view</button>
+      </div>
+      <div class="col-2 flex-centered">
+        <button id="toggle-breakpoints" data-view="show">breakpoints</button>
+      </div>
+      <div class="example col-8">.col-8</div>
+      <div class="example col-1">.col-1</div>
+      <div class="example col-1">.col-1</div>
+      <div class="example col-1">.col-1</div>
+      <div class="example col-1">.col-1</div>
+      <div class="example col-1">.col-1</div>
+      <div class="example col-1">.col-1</div>
+      <div class="example col-1">.col-1</div>
+      <div class="example col-1">.col-1</div>
 
-      <div class="bgc col-2">Column 2</div>
-      <div class="bgc col-2">Column 2</div>
-      <div class="bgc col-2">Column 2</div>
-      <div class="bgc col-2">Column 2</div>
+      <div class="example col-2">.col-2</div>
+      <div class="example col-2">.col-2</div>
+      <div class="example col-2">.col-2</div>
+      <div class="example col-2">.col-2</div>
 
-      <div class="bgc col-4">Column 4</div>
-      <div class="bgc col-4">Column 4</div>
+      <div class="example col-4 col-xl-6">.col-4.col-xl-6</div>
+      <div class="example col-4 col-xl-6">.col-4.col-xl-6</div>
 
-      <div class="bgc col-w3">Column w3</div>
-      <div class="bgc col-w3">Column w3</div>
-      <div class="bgc col-w3">Column w3</div>
+      <div class="example col-w3">.col-w3</div>
+      <div class="example col-w3">.col-w3</div>
+      <div class="example col-w3">.col-w3</div>
+      <div class="example col-w5">.col-w5</div>
+      <div class="example col-w5">.col-w5</div>
+      <div class="example col-w5">.col-w5</div>
+      <div class="example col-w5">.col-w5</div>
+      <div class="example col-w5">.col-w5</div>
+      <div class="example col-w6">.col-w6</div>
+      <div class="example col-w6">.col-w6</div>
+      <div class="example col-w6">.col-w6</div>
+      <div class="example col-w6">.col-w6</div>
+      <div class="example col-w6">.col-w6</div>
+      <div class="example col-w6">.col-w6</div>
     </div>
+
+    <script>
+      const toggleGridButton = document.getElementById('toggle-grid');
+      const toggleBreakpointsButton =
+        document.getElementById('toggle-breakpoints');
+
+      toggleGridButton.addEventListener('click', () => {
+        document.body.classList.toggle('bv8-debug-breakpoints');
+        toggleGridButton.setAttribute(
+          'data-view',
+          toggleGridButton.getAttribute('data-view') === 'show'
+            ? 'hide'
+            : 'show'
+        );
+      });
+      toggleBreakpointsButton.addEventListener('click', () => {
+        document.body.classList.toggle('bv8-debug-grid');
+        toggleBreakpointsButton.setAttribute(
+          'data-view',
+          toggleBreakpointsButton.getAttribute('data-view') === 'show'
+            ? 'hide'
+            : 'show'
+        );
+      });
+    </script>
   </body>
 </html>
