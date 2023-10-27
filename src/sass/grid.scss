@@ -1,0 +1,148 @@
+@import './mixins';
+@import './debug';
+
+:root {
+  --bv8-debug-grid: rgba(23, 198, 93, 0.1);
+
+  --bv8-grid-columns: 4;
+  --bv8-gap: #{$bv8-gap};
+  --bv8-container: 100%;
+  --bv8-column: calc(
+    100% / var(--bv8-grid-columns) - var(--bv8-gap) + var(--bv8-gap) /
+      var(--bv8-grid-columns)
+  );
+
+  --bv8-sm: #{bv8-breakpoint(sm)};
+  --bv8-md: #{bv8-breakpoint(md)};
+  --bv8-lg: #{bv8-breakpoint(lg)};
+  --bv8-xl: #{bv8-breakpoint(xl)};
+  --bv8-xxl: #{bv8-breakpoint(xxl)};
+
+  @include screenMin(md) {
+    --bv8-grid-columns: 8;
+    // --bv8-column: #{bv8-column-size(md)};
+    --bv8-container: #{bv8-container(md)};
+  }
+  @include screenMin(lg) {
+    // --bv8-column: #{bv8-column-size(lg)};
+    --bv8-container: #{bv8-container(lg)};
+  }
+  @include screenMin(xl) {
+    // --bv8-column: #{bv8-column-size(xl)};
+    --bv8-container: #{bv8-container(xl)};
+  }
+  @include screenMin(xxl) {
+    // --bv8-column: #{bv8-column-size(xxl)};
+    --bv8-container: #{bv8-container(xxl)};
+  }
+}
+.container {
+  &,
+  &-md,
+  &-lg,
+  &-xl,
+  &-xxl {
+    width: var(--bv8-container);
+    gap: var(--bv8-gap);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  padding: 0 var(--bv8-gap);
+  @include screenMinProp(md, padding, 0);
+  @include screenMinProp(md, width, bv8-container(md));
+  @include screenMinProp(lg, width, bv8-container(lg));
+  @include screenMinProp(xl, width, bv8-container(xl));
+  @include screenMinProp(xxl, width, bv8-container(xxl));
+
+  @each $key in (md, lg, xl, xxl) {
+    &-#{$key} {
+      width: 100%;
+      padding: 0 var(--bv8-gap);
+
+      @include screenMin($key) {
+        padding: 0;
+        width: var(--bv8-container);
+      }
+    }
+  }
+}
+
+@for $i from 1 through $bv8-columns {
+  .col-#{$i} {
+    width: calc((var(--bv8-column) + var(--bv8-gap)) * #{$i} - var(--bv8-gap));
+  }
+  @each $key, $value in $bv8-breakpoints {
+    @include screenMin($key) {
+      .col-#{$i} {
+        width: calc(
+          (var(--bv8-column) + var(--bv8-gap)) * #{$i} - var(--bv8-gap)
+        );
+      }
+      .col-#{$key}-#{$i} {
+        width: calc(
+          (var(--bv8-column) + var(--bv8-gap)) * #{$i} - var(--bv8-gap)
+        );
+      }
+    }
+  }
+}
+
+@each $i in (3 5 6) {
+  $prefix: i;
+
+  .col-#{$prefix}#{$i} {
+    width: calc((100% / #{$i}) - var(--bv8-gap) + var(--bv8-gap) / #{$i});
+  }
+  @each $key, $value in $bv8-breakpoints {
+    @include screenMin($key) {
+      .col-#{$prefix}#{$i} {
+        width: calc((100% / #{$i}) - var(--bv8-gap) + var(--bv8-gap) / #{$i});
+      }
+      .col-#{$key}-#{$prefix}#{$i} {
+        width: calc((100% / #{$i}) - var(--bv8-gap) + var(--bv8-gap) / #{$i});
+      }
+    }
+  }
+}
+
+@include bv8CreateClasses(d, '', '', display, block none flex inline-flex);
+@include bv8CreateClasses(flex, '', '', flex, wrap nowrap);
+@include bv8CreateClasses(
+  align-items,
+  '',
+  '',
+  align-items,
+  (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    stretch: stretch,
+  )
+);
+@include bv8CreateClasses(
+  justify-content,
+  '',
+  '',
+  justify-content,
+  (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    between: space-between,
+    around: space-around,
+    evenly: space-evenly,
+  )
+);
+@include bv8CreateClasses(flex, centered, '', _content) {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

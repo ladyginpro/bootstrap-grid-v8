@@ -1,0 +1,55 @@
+html {
+  font-size: 16px;
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
+h1 {
+  font-size: 4rem;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.container,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl {
+  padding-bottom: 4rem !important;
+}
+[data-example] {
+  border: 2px solid;
+  padding: 2rem 0;
+  border-radius: 0.5rem;
+  color: #17c65d;
+  font-size: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+[data-example]:before {
+  content: attr(class);
+}
+button {
+  border: none;
+  color: #02160a;
+  font-size: 1.125rem;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  background-color: #17c65d;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+button:hover {
+  opacity: 0.9;
+}
+button:active {
+  opacity: 0.9;
+  transform: scale(0.95);
+}
+button::before {
+  content: attr(data-view) ' ';
+}
+button:first-letter {
+  text-transform: uppercase;
+}

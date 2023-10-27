@@ -1,0 +1,196 @@
+$bv8-columns: 8 !default;
+$bv8-columns-md: 4 !default;
+$bv8-gap: 24px !default;
+$bv8-breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+) !default;
+$bv8-containers: (
+  xs: 100%,
+  sm: 100%,
+  md: 680px,
+  lg: 936px,
+  xl: 1064px,
+  xxl: 1320px,
+) !default;
+$bv8-column-size: (
+  xs: 25%,
+  sm: 25%,
+  md: 64px,
+  lg: 96px,
+  xl: 112px,
+  xxl: 144px,
+) !default;
+
+@function bv8-breakpoint($size: null) {
+  $value: map-get($bv8-breakpoints, $size);
+  @return if($value != null, $value, $size);
+}
+@function bv8-container($key: null) {
+  @return map-get($bv8-containers, $key);
+}
+@function bv8-column-size($key: null) {
+  @return map-get($bv8-column-size, $key);
+}
+
+@mixin screenMin($size: null, $prop: width) {
+  @media (#{'min-' + $prop}: bv8-breakpoint($size)) {
+    @content;
+  }
+}
+
+@mixin screenMinHeight($size: null) {
+  @include screenMin($size, height);
+}
+
+@mixin screenMax($size: null, $prop: width) {
+  @media (#{'min-' + $prop}: bv8-breakpoint($size)) {
+    @content;
+  }
+}
+
+@mixin screenMaxHeight($size: null) {
+  @include screenMax($size, height);
+}
+
+@mixin screenBetween($min: null, $max: null, $prop: width) {
+  @media (#{'min-' + $prop}: bv8-breakpoint($min)) and (#{'max-' + $prop}: bv8-breakpoint($max)) {
+    @content;
+  }
+}
+
+@mixin screenBetweenHeight($min: null, $max: null) {
+  @include screenBetween($min, $max, height);
+}
+
+@mixin screenExact($widthProp: null null, $heightProp: null null) {
+  @media (#{nth($widthProp, 1) + '-width'}: nth($widthProp, 2)) and (#{nth($heightProp, 1) + '-height'}: nth($heightProp, 2)) {
+    @content;
+  }
+}
+
+@mixin screenMinProp(
+  $breakpoint: null,
+  $prop: null,
+  $value: null,
+  $orientation: width
+) {
+  @if ($breakpoint != null and $prop != null) {
+    @include screenMin($breakpoint, $orientation) {
+      #{$prop}: $value;
+    }
+  }
+}
+
+@mixin screenMinPropHeight($breakpoint: null, $prop: null, $value: null) {
+  @if ($breakpoint != null and $prop != null) {
+    @include screenMin($breakpoint, height) {
+      #{$prop}: $value;
+    }
+  }
+}
+
+@mixin screenMaxProp(
+  $breakpoint: null,
+  $prop: null,
+  $value: null,
+  $orientation: width
+) {
+  @if ($breakpoint != null and $prop != null) {
+    @include screenMax($breakpoint, $orientation) {
+      #{$prop}: $value;
+    }
+  }
+}
+
+@mixin screenMaxPropHeight($breakpoint: null, $prop: null, $value: null) {
+  @if ($breakpoint != null and $prop != null) {
+    @include screenMax($breakpoint, height) {
+      #{$prop}: $value;
+    }
+  }
+}
+
+@mixin bv8CreateClasses(
+  $classPrefix: null,
+  $classSuffix: null,
+  $childs: '',
+  $property: null,
+  $values: null,
+  $important: null,
+  $separator: null
+) {
+  // Example:
+  // bv8CreateClasses(txt, null, '', txt, center left);
+
+  @if ($important != null) {
+    $important: '!important';
+  }
+
+  @if ($separator == null) {
+    $separator: '-';
+  }
+
+  $suffixSeparator: null;
+
+  @if ($classSuffix) {
+    $suffixSeparator: '-';
+  }
+
+  @if ($property == _content) {
+    .#{$classPrefix}#{$separator}#{$classSuffix} #{$childs} {
+      @content;
+    }
+    @each $breakpointName, $breakpointValue in $bv8-breakpoints {
+      @include screenMin($breakpointName) {
+        .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}
+          #{$childs} {
+          @content;
+        }
+      }
+    }
+  } @else if ($classPrefix != null and $property != null and $values != null) {
+    @if (type-of($values) == 'string') {
+      $values: append((), $values);
+    }
+
+    @if (type-of($values) == 'map') {
+      @each $name, $value in $values {
+        .#{$classPrefix}#{$separator}#{$name} #{$childs} {
+          #{$property}: #{$value} #{$important};
+          @content;
+        }
+        @each $breakpointName, $breakpointValue in $bv8-breakpoints {
+          @include screenMin($breakpointName) {
+            .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}#{$suffixSeparator}#{$name}
+              #{$childs} {
+              #{$property}: #{$value} #{$important};
+              @content;
+            }
+          }
+        }
+      }
+    } @else if (type-of($values) == 'list') {
+      @each $value in $values {
+        .#{$classPrefix}#{$separator}#{$value} {
+          #{$property}: #{$value} #{$important};
+          @content;
+        }
+        @each $breakpointName, $breakpointValue in $bv8-breakpoints {
+          @include screenMin($breakpointName) {
+            .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}#{$suffixSeparator}#{$value}
+              #{$childs} {
+              #{$property}: #{$value} #{$important};
+              @content;
+            }
+          }
+        }
+      }
+    }
+  } @else {
+    @warn 'mixin - createBootstrapClasses: one or more arguments are null';
+  }
+}
