@@ -1,0 +1,57 @@
+$bv8-columns: 8 !default;
+$bv8-columns-md: 4 !default;
+$bv8-gap: 24px !default;
+$bv8-breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+) !default;
+$bv8-containers: (
+  xs: 100%,
+  sm: 100%,
+  md: 100%,
+  lg: 936px,
+  xl: 1064px,
+  xxl: 1320px,
+) !default;
+$bv8-column-size: (
+  xs: 25%,
+  sm: 25%,
+  md: 64px,
+  lg: 96px,
+  xl: 112px,
+  xxl: 144px,
+) !default;
+
+$bv8-use-importatnt: true !default;
+
+$remValues: (
+  '0': 0,
+  '0125': 0.125rem,
+  '025': 0.25rem,
+  '05': 0.5rem,
+  '0775': 0.75rem,
+  '0875': 0.875rem,
+  '1': 1rem,
+  '1125': 1.125rem,
+  '125': 1.25rem,
+  '15': 1.5rem,
+  '175': 1.75rem,
+  '1875': 1.875rem,
+  '2': 2rem,
+  '2125': 2.125rem,
+  '225': 2.25rem,
+  '25': 2.5rem,
+  '275': 2.75rem,
+  '2875': 2.875rem,
+  '3': 3rem,
+  '3125': 3.125rem,
+  '325': 3.25rem,
+  '35': 3.5rem,
+  '375': 3.75rem,
+  '3875': 3.875rem,
+  '4': 4rem,
+  'max': 10000rem,
+);

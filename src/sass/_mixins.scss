@@ -1,29 +1,4 @@
-$bv8-columns: 8 !default;
-$bv8-columns-md: 4 !default;
-$bv8-gap: 24px !default;
-$bv8-breakpoints: (
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  xxl: 1400px,
-) !default;
-$bv8-containers: (
-  xs: 100%,
-  sm: 100%,
-  md: 680px,
-  lg: 936px,
-  xl: 1064px,
-  xxl: 1320px,
-) !default;
-$bv8-column-size: (
-  xs: 25%,
-  sm: 25%,
-  md: 64px,
-  lg: 96px,
-  xl: 112px,
-  xxl: 144px,
-) !default;
+@import 'config';
 
 @function bv8-breakpoint($size: null) {
   $value: map-get($bv8-breakpoints, $size);
@@ -114,6 +89,12 @@ $bv8-column-size: (
   }
 }
 
+@mixin propertiesSetValue($properties, $value) {
+  @each $property in $properties {
+    #{$property}: $value;
+  }
+}
+
 @mixin bv8CreateClasses(
   $classPrefix: null,
   $classSuffix: null,
@@ -136,7 +117,7 @@ $bv8-column-size: (
 
   $suffixSeparator: null;
 
-  @if ($classSuffix) {
+  @if ($classSuffix != null and $classSuffix != '') {
     $suffixSeparator: '-';
   }
 
@@ -148,7 +129,7 @@ $bv8-column-size: (
       @include screenMin($breakpointName) {
         .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}
           #{$childs} {
-          @content;
+            @content;
         }
       }
     }
@@ -160,15 +141,23 @@ $bv8-column-size: (
     @if (type-of($values) == 'map') {
       @each $name, $value in $values {
         .#{$classPrefix}#{$separator}#{$name} #{$childs} {
-          #{$property}: #{$value} #{$important};
+          @if (type-of($property) == list) {
+            @include propertiesSetValue($property, $value #{$important});
+          } @else {
+            #{$property}: #{$value} #{$important};
+          }
           @content;
         }
         @each $breakpointName, $breakpointValue in $bv8-breakpoints {
           @include screenMin($breakpointName) {
             .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}#{$suffixSeparator}#{$name}
               #{$childs} {
-              #{$property}: #{$value} #{$important};
-              @content;
+                @if (type-of($property) == list) {
+                  @include propertiesSetValue($property, $value #{$important});
+                } @else {
+                  #{$property}: #{$value} #{$important};
+                }
+                @content;
             }
           }
         }
@@ -176,15 +165,23 @@ $bv8-column-size: (
     } @else if (type-of($values) == 'list') {
       @each $value in $values {
         .#{$classPrefix}#{$separator}#{$value} {
-          #{$property}: #{$value} #{$important};
+          @if (type-of($property) == list) {
+            @include propertiesSetValue($property, $value #{$important});
+          } @else {
+            #{$property}: #{$value} #{$important};
+          }
           @content;
         }
         @each $breakpointName, $breakpointValue in $bv8-breakpoints {
           @include screenMin($breakpointName) {
             .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}#{$suffixSeparator}#{$value}
               #{$childs} {
-              #{$property}: #{$value} #{$important};
-              @content;
+                @if (type-of($property) == list) {
+                  @include propertiesSetValue($property, $value #{$important});
+                } @else {
+                  #{$property}: #{$value} #{$important};
+                }
+                @content;
             }
           }
         }

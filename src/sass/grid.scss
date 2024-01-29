@@ -1,10 +1,12 @@
 @import './mixins';
 @import './debug';
+@import './classes';
+
 
 :root {
   --bv8-debug-grid: rgba(23, 198, 93, 0.1);
 
-  --bv8-grid-columns: 4;
+  --bv8-grid-columns: #{$bv8-columns-md};
   --bv8-gap: #{$bv8-gap};
   --bv8-container: 100%;
   --bv8-column: calc(
@@ -19,20 +21,16 @@
   --bv8-xxl: #{bv8-breakpoint(xxl)};
 
   @include screenMin(md) {
-    --bv8-grid-columns: 8;
-    // --bv8-column: #{bv8-column-size(md)};
+    --bv8-grid-columns: #{$bv8-columns};
     --bv8-container: #{bv8-container(md)};
   }
   @include screenMin(lg) {
-    // --bv8-column: #{bv8-column-size(lg)};
     --bv8-container: #{bv8-container(lg)};
   }
   @include screenMin(xl) {
-    // --bv8-column: #{bv8-column-size(xl)};
     --bv8-container: #{bv8-container(xl)};
   }
   @include screenMin(xxl) {
-    // --bv8-column: #{bv8-column-size(xxl)};
     --bv8-container: #{bv8-container(xxl)};
   }
 }
@@ -54,7 +52,7 @@
   }
 
   padding: 0 var(--bv8-gap);
-  @include screenMinProp(md, padding, 0);
+  @if (bv8-container(md) != 100%) { @include screenMinProp(md, padding, 0); }
   @include screenMinProp(md, width, bv8-container(md));
   @include screenMinProp(lg, width, bv8-container(lg));
   @include screenMinProp(xl, width, bv8-container(xl));
@@ -79,7 +77,7 @@
   }
   @each $key, $value in $bv8-breakpoints {
     @include screenMin($key) {
-      .col-#{$i} {
+      .col-#{$key}-#{$i} {
         width: calc(
           (var(--bv8-column) + var(--bv8-gap)) * #{$i} - var(--bv8-gap)
         );
@@ -111,8 +109,42 @@
   }
 }
 
-@include bv8CreateClasses(d, '', '', display, block none flex inline-flex);
-@include bv8CreateClasses(flex, '', '', flex, wrap nowrap);
+@for $i from 1 through $bv8-columns {
+  .offset-#{$i} {
+    margin-left: calc((var(--bv8-column) + var(--bv8-gap)) * #{$i});
+  }
+  .offset-end-#{$i} {
+    margin-right: calc((var(--bv8-column) + var(--bv8-gap)) * #{$i});
+  }
+  @each $key, $value in $bv8-breakpoints {
+    @include screenMin($key) {
+      .offset-#{$i} {
+        margin-left: calc(
+          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
+        );
+      }
+      .offset-end-#{$i} {
+        margin-right: calc(
+          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
+        );
+      }
+      .offset-#{$key}-#{$i} {
+        margin-left: calc(
+          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
+        );
+      }
+      .offset-end-#{$key}-#{$i} {
+        margin-right: calc(
+          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
+        );
+      }
+    }
+  }
+}
+
+@include bv8CreateClasses(d, '', '', display, block none flex inline-flex, $bv8-use-importatnt);
+@include bv8CreateClasses(flex, '', '', flex-wrap, wrap nowrap, $bv8-use-importatnt);
+@include bv8CreateClasses(flex, '', '', flex-direction, row row-reverse column column-reverse revert revert-layer unset, $bv8-use-importatnt);
 @include bv8CreateClasses(
   align-items,
   '',
@@ -123,8 +155,11 @@
     end: flex-end,
     center: center,
     stretch: stretch,
-  )
+  ),
+  $bv8-use-importatnt
 );
+@include bv8CreateClasses(gap, '', '', gap, $remValues, $bv8-use-importatnt);
+@include bv8CreateClasses(round, '', '', border-radius, $remValues, $bv8-use-importatnt);
 @include bv8CreateClasses(
   justify-content,
   '',
@@ -137,7 +172,8 @@
     between: space-between,
     around: space-around,
     evenly: space-evenly,
-  )
+  ),
+  $bv8-use-importatnt
 );
 @include bv8CreateClasses(flex, centered, '', _content) {
   display: flex;
