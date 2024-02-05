@@ -129,7 +129,7 @@
       @include screenMin($breakpointName) {
         .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}
           #{$childs} {
-            @content;
+          @content;
         }
       }
     }
@@ -152,12 +152,12 @@
           @include screenMin($breakpointName) {
             .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}#{$suffixSeparator}#{$name}
               #{$childs} {
-                @if (type-of($property) == list) {
-                  @include propertiesSetValue($property, $value #{$important});
-                } @else {
-                  #{$property}: #{$value} #{$important};
-                }
-                @content;
+              @if (type-of($property) == list) {
+                @include propertiesSetValue($property, $value #{$important});
+              } @else {
+                #{$property}: #{$value} #{$important};
+              }
+              @content;
             }
           }
         }
@@ -176,12 +176,12 @@
           @include screenMin($breakpointName) {
             .#{$classPrefix}#{$separator}#{$breakpointName}#{$separator}#{$classSuffix}#{$suffixSeparator}#{$value}
               #{$childs} {
-                @if (type-of($property) == list) {
-                  @include propertiesSetValue($property, $value #{$important});
-                } @else {
-                  #{$property}: #{$value} #{$important};
-                }
-                @content;
+              @if (type-of($property) == list) {
+                @include propertiesSetValue($property, $value #{$important});
+              } @else {
+                #{$property}: #{$value} #{$important};
+              }
+              @content;
             }
           }
         }
@@ -190,4 +190,20 @@
   } @else {
     @warn 'mixin - createBootstrapClasses: one or more arguments are null';
   }
+}
+
+@mixin bv8DebugGrid($columns: 12) {
+  $gradientValue: '';
+
+  @for $i from 1 through $columns {
+    @if ($i == 1) {
+      $gradientValue: '90deg,var(--bv8-debug-grid) 0%,var(--bv8-debug-grid) var(--bv8-column),transparent var(--bv8-column),transparent calc(var(--bv8-column) + var(--bv8-gap)),';
+    } @else {
+      $gradientValue: $gradientValue +
+        'var(--bv8-debug-grid) calc(var(--bv8-column) * #{$i - 1} + var(--bv8-gap) * #{$i - 1}),var(--bv8-debug-grid) calc(var(--bv8-column) * #{$i} + var(--bv8-gap) * #{$i - 1}),transparent calc(var(--bv8-column) * #{$i} + var(--bv8-gap) * #{$i - 1}),transparent calc(var(--bv8-column) * #{$i} + var(--bv8-gap) * #{$i})' +
+        if($i != $columns, ',', '');
+    }
+  }
+
+  background: linear-gradient(unquote($gradientValue));
 }

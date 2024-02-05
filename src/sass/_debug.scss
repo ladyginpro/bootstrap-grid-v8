@@ -37,61 +37,10 @@
       transform: translate(-50%, 0);
       z-index: 777777;
       pointer-events: none;
-      background: linear-gradient(
-        90deg,
-        var(--bv8-debug-grid) 0%,
-        var(--bv8-debug-grid) var(--bv8-column),
-        transparent var(--bv8-column),
-        transparent calc(var(--bv8-column) + var(--bv8-gap)),
-        var(--bv8-debug-grid) calc(var(--bv8-column) + var(--bv8-gap)),
-        var(--bv8-debug-grid) calc(var(--bv8-column) * 2 + var(--bv8-gap)),
-        transparent calc(var(--bv8-column) * 2 + var(--bv8-gap)),
-        transparent calc(var(--bv8-column) * 2 + var(--bv8-gap) * 2),
-        var(--bv8-debug-grid) calc(var(--bv8-column) * 2 + var(--bv8-gap) * 2),
-        var(--bv8-debug-grid) calc(var(--bv8-column) * 3 + var(--bv8-gap) * 2),
-        transparent calc(var(--bv8-column) * 3 + var(--bv8-gap) * 2),
-        transparent calc(var(--bv8-column) * 3 + var(--bv8-gap) * 3),
-        var(--bv8-debug-grid) calc(var(--bv8-column) * 3 + var(--bv8-gap) * 3),
-        var(--bv8-debug-grid) calc(var(--bv8-column) * 4 + var(--bv8-gap) * 3),
-        transparent calc(var(--bv8-column) * 4 + var(--bv8-gap) * 3),
-        transparent calc(var(--bv8-column) * 4 + var(--bv8-gap) * 4)
-      );
+      @include bv8DebugGrid($bv8-columns-md);
+
       @include screenMin(md) {
-        background: linear-gradient(
-          90deg,
-          var(--bv8-debug-grid) 0%,
-          var(--bv8-debug-grid) var(--bv8-column),
-          transparent var(--bv8-column),
-          transparent calc(var(--bv8-column) + var(--bv8-gap)),
-          var(--bv8-debug-grid) calc(var(--bv8-column) + var(--bv8-gap)),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 2 + var(--bv8-gap)),
-          transparent calc(var(--bv8-column) * 2 + var(--bv8-gap)),
-          transparent calc(var(--bv8-column) * 2 + var(--bv8-gap) * 2),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 2 + var(--bv8-gap) * 2),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 3 + var(--bv8-gap) * 2),
-          transparent calc(var(--bv8-column) * 3 + var(--bv8-gap) * 2),
-          transparent calc(var(--bv8-column) * 3 + var(--bv8-gap) * 3),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 3 + var(--bv8-gap) * 3),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 4 + var(--bv8-gap) * 3),
-          transparent calc(var(--bv8-column) * 4 + var(--bv8-gap) * 3),
-          transparent calc(var(--bv8-column) * 4 + var(--bv8-gap) * 4),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 4 + var(--bv8-gap) * 4),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 5 + var(--bv8-gap) * 4),
-          transparent calc(var(--bv8-column) * 5 + var(--bv8-gap) * 4),
-          transparent calc(var(--bv8-column) * 5 + var(--bv8-gap) * 5),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 5 + var(--bv8-gap) * 5),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 6 + var(--bv8-gap) * 5),
-          transparent calc(var(--bv8-column) * 6 + var(--bv8-gap) * 5),
-          transparent calc(var(--bv8-column) * 6 + var(--bv8-gap) * 6),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 6 + var(--bv8-gap) * 6),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 7 + var(--bv8-gap) * 6),
-          transparent calc(var(--bv8-column) * 7 + var(--bv8-gap) * 6),
-          transparent calc(var(--bv8-column) * 7 + var(--bv8-gap) * 7),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 7 + var(--bv8-gap) * 7),
-          var(--bv8-debug-grid) calc(var(--bv8-column) * 8 + var(--bv8-gap) * 7),
-          transparent calc(var(--bv8-column) * 8 + var(--bv8-gap) * 6),
-          transparent calc(var(--bv8-column) * 8 + var(--bv8-gap) * 8)
-        );
+        @include bv8DebugGrid($bv8-columns);
       }
     }
   }

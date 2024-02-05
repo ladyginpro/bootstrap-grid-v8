@@ -2,7 +2,6 @@
 @import './debug';
 @import './classes';
 
-
 :root {
   --bv8-debug-grid: rgba(23, 198, 93, 0.1);
 
@@ -52,7 +51,13 @@
   }
 
   padding: 0 var(--bv8-gap);
-  @if (bv8-container(md) != 100%) { @include screenMinProp(md, padding, 0); }
+  @if (bv8-container(md) != 100%) {
+    @include screenMinProp(md, padding, 0);
+    padding: 0;
+  }
+  @if (bv8-container(lg) != 100%) {
+    padding: 0;
+  }
   @include screenMinProp(md, width, bv8-container(md));
   @include screenMinProp(lg, width, bv8-container(lg));
   @include screenMinProp(xl, width, bv8-container(xl));
@@ -119,32 +124,45 @@
   @each $key, $value in $bv8-breakpoints {
     @include screenMin($key) {
       .offset-#{$i} {
-        margin-left: calc(
-          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
-        );
+        margin-left: calc((var(--bv8-column) + var(--bv8-gap)) * #{$i});
       }
       .offset-end-#{$i} {
-        margin-right: calc(
-          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
-        );
+        margin-right: calc((var(--bv8-column) + var(--bv8-gap)) * #{$i});
       }
       .offset-#{$key}-#{$i} {
-        margin-left: calc(
-          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
-        );
+        margin-left: calc((var(--bv8-column) + var(--bv8-gap)) * #{$i});
       }
       .offset-end-#{$key}-#{$i} {
-        margin-right: calc(
-          (var(--bv8-column) + var(--bv8-gap)) * #{$i}
-        );
+        margin-right: calc((var(--bv8-column) + var(--bv8-gap)) * #{$i});
       }
     }
   }
 }
 
-@include bv8CreateClasses(d, '', '', display, block none flex inline-flex, $bv8-use-importatnt);
-@include bv8CreateClasses(flex, '', '', flex-wrap, wrap nowrap, $bv8-use-importatnt);
-@include bv8CreateClasses(flex, '', '', flex-direction, row row-reverse column column-reverse revert revert-layer unset, $bv8-use-importatnt);
+@include bv8CreateClasses(
+  d,
+  '',
+  '',
+  display,
+  block none flex inline-flex,
+  $bv8-use-importatnt
+);
+@include bv8CreateClasses(
+  flex,
+  '',
+  '',
+  flex-wrap,
+  wrap nowrap,
+  $bv8-use-importatnt
+);
+@include bv8CreateClasses(
+  flex,
+  '',
+  '',
+  flex-direction,
+  row row-reverse column column-reverse revert revert-layer unset,
+  $bv8-use-importatnt
+);
 @include bv8CreateClasses(
   align-items,
   '',
@@ -159,7 +177,14 @@
   $bv8-use-importatnt
 );
 @include bv8CreateClasses(gap, '', '', gap, $remValues, $bv8-use-importatnt);
-@include bv8CreateClasses(round, '', '', border-radius, $remValues, $bv8-use-importatnt);
+@include bv8CreateClasses(
+  round,
+  '',
+  '',
+  border-radius,
+  $remValues,
+  $bv8-use-importatnt
+);
 @include bv8CreateClasses(
   justify-content,
   '',
